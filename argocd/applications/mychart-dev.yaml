@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mychart-dev
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  sources:
+    - repoURL: ghcr.io/laurint0/charts
+      chart: mychart
+      targetRevision: 0.1.0   # Sostituisci con la versione del tuo chart pubblicata su GHCR
+      helm:
+        valueFiles:
+          - $values/apps/mychart/dev/values.yaml
+    - repoURL: https://github.com/laurint0/gitops-config   # Sostituisci con l'URL del tuo repo Git
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
