@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: diario-dev
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: diario
+  sources:
+    - repoURL: ghcr.io/laurint0/charts
+      chart: diario
+      targetRevision: 0.1.0
+      helm:
+        valueFiles:
+          - $values/apps/diario/dev/values.yaml
+    - repoURL: https://github.com/laurint0/gitops-config
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

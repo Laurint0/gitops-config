@@ -1,0 +1,16 @@
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - host: diario.lab.local
+      paths:
+        - path: /
+
+replicaCount: 1
+
+postgresql:
+  enabled: true
+  auth:
+    username: diario
+    password: diario
+    database: diario
