@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: ghcr.io/laurint0/charts
       chart: diario
-      targetRevision: 0.1.0
+      targetRevision: 0.1.1
       helm:
         valueFiles:
           - $values/apps/diario/dev/values.yaml
